@@ -37,9 +37,6 @@ public class CustomAdapter extends BaseAdapter {
         return unconvert(box,colCount);
     }
 
-    public int getColCount(){
-        return colCount;
-    }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.activity_gridview, null); // inflate the layout

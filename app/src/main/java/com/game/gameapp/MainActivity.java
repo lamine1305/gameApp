@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.game.gameapp.com.game.gameapp.model.Box;
 import com.game.gameapp.com.game.gameapp.model.Pieces;
+import com.game.gameapp.com.game.gameapp.model.SceneDeJeu;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,10 +22,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     GridView simpleGrid;
-    CustomAdapter  adapter ;
+    CustomAdapter  adapter,adapterScene ;
    Map<Integer,CustomAdapter> adapters = new HashMap<>();
-   // public Piece[][] piece1 ;
-   // public Piece[][] piece2 ;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -37,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         final Pieces pieces = new Pieces();
         int i=0;
         List<Box[][]> piecesListe = Arrays.asList(new Box[][][]{pieces.getP1(),pieces.getP5(),pieces.getP6(),pieces.getP7(), pieces.getP8()});
+        SceneDeJeu sceneDeJeu = new SceneDeJeu();
+        adapterScene = new CustomAdapter(getApplicationContext(), sceneDeJeu.getTable(), 7);
+        adapters.put(i,adapterScene);
+        i=1;
+        //gridView.setAdapter(adapter);
+       // layout.addView(gridView);
         for(Box[][] piece :piecesListe) {
             final GridView gridView = new GridView(this);
              int colCount = piece[0].length;
@@ -45,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(200, 300);
             parms.setMargins(0,0,0,10);
             gridView.setLayoutParams(parms);
-
             adapter = new CustomAdapter(getApplicationContext(), piece, colCount);
-           adapters.put(i,adapter);
+            adapters.put(i,adapter);
             gridView.setAdapter(adapter);
+
             layout.addView(gridView);
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     adapter = new CustomAdapter(getApplicationContext(), rotationPiece, piece.length);
                     adapters.put(idGrid,adapter);
                     gridView.setNumColumns(piece.length);
-                         LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams( piece.length*60, 300);
-                         parms.setMargins(20,0,0,10);
-                         gridView.setLayoutParams(parms);
+                    LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams( piece.length*60, 300);
+                    parms.setMargins(20,0,0,10);
+                    gridView.setLayoutParams(parms);
                     gridView.setAdapter(adapter);
                 }
             }
